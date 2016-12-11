@@ -1,14 +1,19 @@
-if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.exports === exports){
-  module.exports = 'highcharts-ng';
-}
 
-(function () {
+(function (root, factory) {
   'use strict';
-  /*global angular: false, Highcharts: false */
 
+  if (typeof define === 'function' && define.amd) {
+      define(['angular', 'highcharts/highstock'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+      module.exports = factory(require('angular', 'highcharts/highstock'));
+  } else {
+      root.returnExports = factory(root.angular, root.Highcharts);
+  }
+}(this, function (angular, Highcharts) {
+  'use strict';
 
   angular.module('highcharts-ng', [])
-    .factory('highchartsNG', ['$q', '$window', highchartsNG])
+    .factory('highchartsNG', ['$q', highchartsNG])
     .directive('highchart', ['highchartsNG', '$timeout', highchart]);
 
   //IE8 support
@@ -55,8 +60,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
     return destination;
   }
 
-  function highchartsNG($q, $window) {
-    var highchartsProm = $q.when($window.Highcharts);
+  function highchartsNG($q) {
+    var highchartsProm = $q.when(Highcharts);
 
     function getHighchartsOnce() {
       return highchartsProm;
@@ -470,4 +475,5 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
       link: link
     };
   }
-}());
+  return 'highcharts-ng';
+}));

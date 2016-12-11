@@ -17,6 +17,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "highcharts": "^5.0.0",
     "angular": "^1.5.7",
     "angular-mocks": "^1.5.7",
     "connect-livereload": "~0.5.3",
